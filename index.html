@@ -12,6 +12,21 @@
     <form id=" addClientForm">
         <input type="text" id=" clientID" placeholder="Clinet ID" required/>
         <input type="text" id="name" placeholder="Name" required>
+        <input type="date" id="dob" placeholder="Date of Birth" required />
+        <select id="gender">
+            <option value="Female"> Female </option> 
+            <option value="Male"> Male </option> 
+            <option value="Unspecified"> Prefer not to say </option> 
+        </select>
+        <input type="text" id=" ContactInfo" placeholder="ContactInfo" required/>
+        <input type="date" id=" joinedDate"required/>
+        <input type="date" id=" endingDate"required/>
+        <textarea id="specialHealthNotes" placeholder="Special Health Notes"></textarea>
+        <label>
+        <input type="checkbox" id="isVIP" />
+        VIP Client
+    </label>
+    <button type = "submit"> Add Client</button>
     </form>
 </body>
 </html>
