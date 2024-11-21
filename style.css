@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -34,4 +35,100 @@ section {
     margin: 2em auto;
     max-width: 900px;
     padding: 1em;
+}
+
+/* Card Styles */
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+/* Form Styles */
+#clientDetailsForm label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+#clientDetailsForm input,
+#clientDetailsForm select,
+#clientDetailsForm textarea,
+#clientDetailsForm button {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.75em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+#clientDetailsForm button {
+    background-color: #3a713c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#clientDetailsForm button:hover {
+    background-color: #3a713c;
+}
+
+#clientDetailsForm textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Client Display Section */
+#clientList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.client-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.client-card h3 {
+    margin-top: 0;
+}
+
+.client-card p {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.client-card button {
+    background-color: #284c44;
+    color: white;
+    border: none;
+    padding: 0.5em;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.client-card button:hover {
+    background-color: #155724;
+}
+
+/* Error Message Styles */
+#errorContainer {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 1em;
+    border-radius: 4px;
+    margin-bottom: 2em;
+}
+
+#errorContainer.success {
+    background-color: #d4edda;
+    color: #155724;
 }
