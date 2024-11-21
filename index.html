@@ -7,17 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <section id="clientform">
     <h1> Client Managemnt</h1>
 
-    <form id=" addClientForm">
-        <input type="text" id=" clientID" placeholder="Clinet ID" required/>
-        <input type="text" id="name" placeholder="Name" required>
+    <form id=" ClientDetailsForm">
+        <label for="clientID">Client ID:</label>
+        <input type="text" id=" clientID" placeholder="Client ID" required/>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Name" required />
+
+        <label for="dob">DOB:</label>
         <input type="date" id="dob" placeholder="Date of Birth" required />
+        <label for="gender">Gender:</label>
         <select id="gender">
             <option value="Female"> Female </option> 
             <option value="Male"> Male </option> 
-            <option value="Unspecified"> Prefer not to say </option> 
-        </select>
+            <option value="Unspecified"> Unspecified</option> 
+        </select><br>
+
+        <label for="fitnessProgram">Fitness Program:</label>
         <select id="FitnessProgram">
             <option value="fat loss"> Fat loss</option>
             <option value="senior finess"> Senior Fitness</option>
@@ -27,19 +37,38 @@
             <option value="overall fitness"> Overall Fitness</option>
             
         </select>
+        <label for="contactInfo">Contact Info:</label>
         <input type="text" id=" ContactInfo" placeholder="ContactInfo" required/>
+
+        <label for="joinedDate">Joined Date:</label>
         <input type="date" id=" joinedDate"required/>
+
+        <label for="endingDate">Ending Date:</label>
         <input type="date" id=" endingDate"required/>
+
+        <label for="specialHealthNotes">Special Health Notes:</label>
         <textarea id="specialHealthNotes" placeholder="Special Health Notes"></textarea>
+       
         <label>
         <input type="checkbox" id="isVIP" />
         VIP Client
-    </label>
+    </label><br>
     <button type = "submit"> Add Client</button>
+         
     </form>
-    
-     <div id="ClientList"></div>
-    <button onclick="displayVIPClients()"> Show VIP Clients</button>
-    
+</section>
+
+<section id="messages">
+    <div id="errorcontainer" class="error"></div>
+
+
+<section id="clientdisplay">
+    <h2>Clients</h2>
+    <div id="ClientList"> </div>
+</section> 
+
+</section>
+
+    <script src="app.js" type="module"></script>
 </body>
 </html>
