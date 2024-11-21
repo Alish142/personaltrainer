@@ -29,3 +29,56 @@ function addOrUpdateClient(event: Event) {
   const endingDate = (document.getElementById("endingDate") as HTMLInputElement).value;
   const specialHealthNotes = (document.getElementById("specialHealthNotes") as HTMLTextAreaElement).value;
   const isVIP = (document.getElementById("isVIP") as HTMLInputElement).checked;
+
+const client: Client = {
+      clientID,
+      name,
+      dob,
+      gender,
+      fitnessProgram,
+      contactInfo,
+      joinedDate,
+      endingDate,
+      specialHealthNotes,
+      isVIP,
+  };
+
+  // Check if it's an update or add
+  const existingClientIndex = clients.findIndex(c => c.clientID === clientID);
+  if (existingClientIndex === -1) {
+      // Add new client
+      clients.push(client);
+  } else {
+      // Update existing client
+      clients[existingClientIndex] = client;
+  }
+
+  // Clear form after submission
+  resetForm();
+  displayClients();
+}
+
+// Display all Clients
+function displayClients() {
+  const clientList = document.getElementById("clientList")!;
+  clientList.innerHTML = ""; // Clear current list
+
+  clients.forEach(client => {
+    const clientCard = document.createElement("div");
+    clientCard.classList.add("client-card");
+
+    clientCard.innerHTML = `
+        <h3>${client.name} (${client.clientID})</h3>
+        <p>Fitness Program: ${client.fitnessProgram}</p>
+        <p>VIP: ${client.isVIP ? "Yes" : "No"}</p>
+        <p>Contact: ${client.contactInfo}</p>
+        <p>DOB: ${client.dob}</p>
+        <p>Joined Date: ${client.joinedDate}</p>
+        <p>Ending Date: ${client.endingDate}</p>
+        <p>Special Health Notes: ${client.specialHealthNotes}</p>
+        <button class="deleteBtn" data-clientid="${client.clientID}">Delete</button>
+        <button class="updateBtn" data-clientid="${client.clientID}">Update</button>
+    `;
+
+    clientList.appendChild(clientCard);
+  });
