@@ -112,3 +112,34 @@ function deleteClient(clientID: string) {
       displayClients();  // Re-render the client list after deletion
   }
 }
+
+
+// Populate Form for Update
+function populateForm(clientID: string) {
+  const client = clients.find(c => c.clientID === clientID);
+  if (client) {
+      // Populate the form with client data for updating
+      (document.getElementById("clientID") as HTMLInputElement).value = client.clientID;
+      (document.getElementById("name") as HTMLInputElement).value = client.name;
+      (document.getElementById("dob") as HTMLInputElement).value = client.dob;
+      (document.getElementById("gender") as HTMLSelectElement).value = client.gender;
+      (document.getElementById("fitnessProgram") as HTMLSelectElement).value = client.fitnessProgram;
+      (document.getElementById("contactInfo") as HTMLInputElement).value = client.contactInfo;
+      (document.getElementById("joinedDate") as HTMLInputElement).value = client.joinedDate;
+      (document.getElementById("endingDate") as HTMLInputElement).value = client.endingDate;
+      (document.getElementById("specialHealthNotes") as HTMLTextAreaElement).value = client.specialHealthNotes;
+      (document.getElementById("isVIP") as HTMLInputElement).checked = client.isVIP;
+  }
+}
+
+// Reset the Form
+function resetForm() {
+  (document.getElementById("clientDetailsForm") as HTMLFormElement).reset();
+}
+
+// Event Listeners
+document.getElementById("clientDetailsForm")?.addEventListener("submit", addOrUpdateClient);
+
+// Call the displayClients initially to show all clients when page loads
+displayClients();
+
