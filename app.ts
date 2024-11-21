@@ -82,3 +82,33 @@ function displayClients() {
 
     clientList.appendChild(clientCard);
   });
+
+// Add event listeners for Delete and Update buttons after rendering the clients
+  const deleteButtons = document.querySelectorAll('.deleteBtn');
+  const updateButtons = document.querySelectorAll('.updateBtn');
+
+  // Attach event listeners to delete buttons
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const clientID = (e.target as HTMLElement).getAttribute('data-clientid')!;
+      deleteClient(clientID);
+    });
+  });
+
+  // Attach event listeners to update buttons
+  updateButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const clientID = (e.target as HTMLElement).getAttribute('data-clientid')!;
+      populateForm(clientID); // Populate the form for updating
+    });
+  });
+}
+
+// Delete Client
+function deleteClient(clientID: string) {
+  const confirmation = confirm(`Are you sure you want to delete client with ID ${clientID}?`);
+  if (confirmation) {
+      clients = clients.filter(client => client.clientID !== clientID);
+      displayClients();  // Re-render the client list after deletion
+  }
+}
