@@ -11,7 +11,6 @@ interface Client {
   isVIP: boolean;
 }
 
-
 let clients: Client[] = [];
 
 // Add or Update Client
@@ -30,30 +29,39 @@ function addOrUpdateClient(event: Event) {
   const specialHealthNotes = (document.getElementById("specialHealthNotes") as HTMLTextAreaElement).value;
   const isVIP = (document.getElementById("isVIP") as HTMLInputElement).checked;
 
-const client: Client = {
-      clientID,
-      name,
-      dob,
-      gender,
-      fitnessProgram,
-      contactInfo,
-      joinedDate,
-      endingDate,
-      specialHealthNotes,
-      isVIP,
-  };
+  // Check if Client ID already exists
+  const existingClientIndex = clients.findIndex(client => client.clientID === clientID);
 
-  // Check if it's an update or add
-  const existingClientIndex = clients.findIndex(c => c.clientID === clientID);
   if (existingClientIndex === -1) {
-      // Add new client
-      clients.push(client);
+      // Add new client if ID is unique
+      clients.push({
+          clientID,
+          name,
+          dob,
+          gender,
+          fitnessProgram,
+          contactInfo,
+          joinedDate,
+          endingDate,
+          specialHealthNotes,
+          isVIP,
+      });
   } else {
-      // Update existing client
-      clients[existingClientIndex] = client;
+      // Update existing client if ID exists
+      clients[existingClientIndex] = {
+          clientID,
+          name,
+          dob,
+          gender,
+          fitnessProgram,
+          contactInfo,
+          joinedDate,
+          endingDate,
+          specialHealthNotes,
+          isVIP,
+      };
   }
 
-  // Clear form after submission
   resetForm();
   displayClients();
 }
@@ -83,11 +91,15 @@ function displayClients() {
     clientList.appendChild(clientCard);
   });
 
-// Add event listeners for Delete and Update buttons after rendering the clients
+  // Add event listeners for Delete and Update buttons after rendering the clients
+  addDeleteUpdateEventListeners();
+}
+
+// Attach event listeners for delete and update actions
+function addDeleteUpdateEventListeners() {
   const deleteButtons = document.querySelectorAll('.deleteBtn');
   const updateButtons = document.querySelectorAll('.updateBtn');
 
-  // Attach event listeners to delete buttons
   deleteButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       const clientID = (e.target as HTMLElement).getAttribute('data-clientid')!;
@@ -95,7 +107,6 @@ function displayClients() {
     });
   });
 
-  // Attach event listeners to update buttons
   updateButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       const clientID = (e.target as HTMLElement).getAttribute('data-clientid')!;
@@ -113,12 +124,10 @@ function deleteClient(clientID: string) {
   }
 }
 
-
 // Populate Form for Update
 function populateForm(clientID: string) {
   const client = clients.find(c => c.clientID === clientID);
   if (client) {
-      // Populate the form with client data for updating
       (document.getElementById("clientID") as HTMLInputElement).value = client.clientID;
       (document.getElementById("name") as HTMLInputElement).value = client.name;
       (document.getElementById("dob") as HTMLInputElement).value = client.dob;
@@ -142,4 +151,3 @@ document.getElementById("clientDetailsForm")?.addEventListener("submit", addOrUp
 
 // Call the displayClients initially to show all clients when page loads
 displayClients();
-
