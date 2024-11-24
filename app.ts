@@ -141,7 +141,7 @@ function displayClients(): void {
   addDeleteUpdateEventListeners();
 }
 
-// Attach event listeners for delete and update actions
+// event listeners for delete and update actions
 function addDeleteUpdateEventListeners(): void {
   let deleteButtons = document.querySelectorAll(".deleteBtn");
   let updateButtons = document.querySelectorAll(".updateBtn");
@@ -193,6 +193,83 @@ function resetForm(): void {
   (document.getElementById("clientDetailsForm") as HTMLFormElement).reset();
 }
 
+// Search client by ID
+function searchClientById(): void {
+  let searchInput = document.getElementById("searchClientId") as HTMLInputElement;
+  let clientId = searchInput.value.trim();
+  
+  if (!clientId) {
+    alert("Please enter a client ID to search.");
+    return;
+  }
+
+  let foundClient = clients.find(client => client.clientID === clientId);
+  
+  if (foundClient) {
+    let searchResult = document.getElementById("searchResult")!;
+    searchResult.innerHTML = ""; // Clear the list
+    
+    let clientCard = document.createElement("div");
+    clientCard.classList.add("client-card");
+    clientCard.innerHTML = `
+      <h3>${foundClient.name} (${foundClient.clientID})</h3>
+      <p><strong>Fitness Program:</strong> ${foundClient.fitnessProgram}</p>
+      <p><strong>VIP:</strong> ${foundClient.isVIP ? "Yes" : "No"}</p>
+      <p><strong>Contact:</strong> ${foundClient.contactInfo}</p>
+      <p><strong>Date of Birth:</strong> ${foundClient.dob}</p>
+      <p><strong>Joined Date:</strong> ${foundClient.joinedDate}</p>
+      <p><strong>Ending Date:</strong> ${foundClient.endingDate}</p>
+      <p><strong>Health Notes:</strong> ${foundClient.specialHealthNotes}</p>
+      <button class="updateBtn" data-clientid="${foundClient.clientID}">Update</button>
+      <button class="deleteBtn" data-clientid="${foundClient.clientID}">Delete</button>
+    `;
+    searchResult.appendChild(clientCard);
+    addDeleteUpdateEventListeners();
+  } else {
+    alert("Client not found.");
+  }
+}
+
+// Show VIP clients
+function showVipClients(): void {
+  let vipClients = clients.filter(client => client.isVIP);
+  
+  if (vipClients.length === 0) {
+    alert("No VIP clients found.");
+    return;
+  }
+
+  let vipClientList = document.getElementById("vipClientList")!;
+  vipClientList.innerHTML = ""; // Clear the list
+  
+  vipClients.forEach(client => {
+    let clientCard = document.createElement("div");
+    clientCard.classList.add("client-card");
+    clientCard.innerHTML = `
+      <h3>${client.name} (${client.clientID})</h3>
+      <p><strong>Fitness Program:</strong> ${client.fitnessProgram}</p>
+      <p><strong>VIP:</strong> Yes</p>
+      <p><strong>Contact:</strong> ${client.contactInfo}</p>
+      <p><strong>Date of Birth:</strong> ${client.dob}</p>
+      <p><strong>Joined Date:</strong> ${client.joinedDate}</p>
+      <p><strong>Ending Date:</strong> ${client.endingDate}</p>
+      <p><strong>Health Notes:</strong> ${client.specialHealthNotes}</p>
+      <button class="updateBtn" data-clientid="${client.clientID}">Update</button>
+      <button class="deleteBtn" data-clientid="${client.clientID}">Delete</button>
+    `;
+    vipClientList.appendChild(clientCard);
+  });
+  addDeleteUpdateEventListeners();
+}
+
 // Initialize the application
-document.getElementById("clientDetailsForm")?.addEventListener("submit", addOrUpdateClient);
-displayClients();
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("clientDetailsForm")?.addEventListener("submit", addOrUpdateClient);
+  document.getElementById("searchForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    searchClientById();
+  });
+  document.getElementById("showVIPClientsBtn")?.addEventListener("click", showVipClients);
+  displayClients();
+});
+
