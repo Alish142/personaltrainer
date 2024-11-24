@@ -52,7 +52,6 @@ let clients: Client[] = [
 
 
 
-// Add or Update Client
 function addOrUpdateClient(event: Event) {
   event.preventDefault();
 
@@ -85,6 +84,8 @@ function addOrUpdateClient(event: Event) {
           specialHealthNotes,
           isVIP,
       });
+
+      showNotification("Client added successfully!", "success");
   } else {
       // Update existing client if ID exists
       clients[existingClientIndex] = {
@@ -99,6 +100,8 @@ function addOrUpdateClient(event: Event) {
           specialHealthNotes,
           isVIP,
       };
+
+      showNotification("Client updated successfully!", "success");
   }
 
   resetForm();
@@ -161,6 +164,29 @@ function deleteClient(clientID: string) {
       clients = clients.filter(client => client.clientID !== clientID);
       displayClients();  // Re-render the client list after deletion
   }
+}
+
+function showNotification(message: string, type: "success" | "error" = "success") {
+  const notification = document.createElement("div");
+  notification.textContent = message;
+  notification.className = `notification ${type}`;
+  notification.style.position = "fixed";
+  notification.style.bottom = "10px";
+  notification.style.right = "10px";
+  notification.style.padding = "10px 20px";
+  notification.style.color = type === "success" ? "#155724" : "#721c24";
+  notification.style.backgroundColor = type === "success" ? "#d4edda" : "#f8d7da";
+  notification.style.border = type === "success" ? "1px solid #c3e6cb" : "1px solid #f5c6cb";
+  notification.style.borderRadius = "5px";
+  notification.style.boxShadow = "0px 4px 6px rgba(0,0,0,0.1)";
+  notification.style.zIndex = "1000";
+
+  document.body.appendChild(notification);
+
+  // Remove notification after 3 seconds
+  setTimeout(() => {
+      notification.remove();
+  }, 3000);
 }
 
 // Populate Form for Update
