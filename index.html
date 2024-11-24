@@ -1,13 +1,222 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>MyAngularApp</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Trainer Client Management</title>
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #3a713c;
+    color: white;
+    padding: 1.5em 0;
+    text-align: center;
+}
+
+header .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header .logo {
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 0.5em;
+    border-radius: 50%;
+}
+
+/* Section Styles */
+section {
+    margin: 2em auto;
+    max-width: 900px;
+    padding: 1em;
+}
+
+/* Card Styles */
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+/* Form Styles */
+#clientDetailsForm label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+#clientDetailsForm input,
+#clientDetailsForm select,
+#clientDetailsForm textarea,
+#clientDetailsForm button {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.75em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+#clientDetailsForm button {
+    background-color: #3a713c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#clientDetailsForm button:hover {
+    background-color: #3a713c;
+}
+
+#clientDetailsForm textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Client Display Section */
+#clientList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.client-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.client-card h3 {
+    margin-top: 0;
+}
+
+.client-card p {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.client-card button {
+    background-color: #284c44;
+    color: white;
+    border: none;
+    padding: 0.5em;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.client-card button:hover {
+    background-color: #155724;
+}
+
+/* Error Message Styles */
+#errorContainer {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 1em;
+    border-radius: 4px;
+    margin-bottom: 2em;
+}
+
+#errorContainer.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+    </style>
+   
 </head>
 <body>
-  <app-root></app-root>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo-container">
+            <img src="Screenshot 2024-09-26 at 6.00.08 pm.png" alt="Training Place Logo" class="logo">
+            <h1>Pariwartan</h1>
+        </div>
+    </header>
+
+    <!-- Add or Update Client Card -->
+    <section id="clientFormContainer">
+        <div class="card">
+            <h2>Add or Update Client</h2>
+            <form id="clientDetailsForm">
+                <label for="clientID">Client ID:</label>
+                <input type="text" id="clientID" placeholder="Client ID" required />
+
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Name" required />
+
+                <label for="dob">DOB:</label>
+                <input type="date" id="dob" placeholder="Date of Birth" required />
+
+                <label for="gender">Gender:</label>
+                <select id="gender" required>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Unspecified">Unspecified</option>
+                </select>
+
+                <label for="fitnessProgram">Fitness Program:</label>
+                <select id="fitnessProgram" required>
+                    <option value="fat loss">Fat loss</option>
+                    <option value="senior fitness">Senior Fitness</option>
+                    <option value="muscle gain">Muscle Gain</option>
+                    <option value="pre/postnatal fitness">Pre/Postnatal Fitness</option>
+                    <option value="contest preparation">Contest Preparation</option>
+                    <option value="overall fitness">Overall Fitness</option>
+                </select>
+
+                <label for="contactInfo">Contact Info:</label>
+                <input type="text" id="contactInfo" placeholder="Contact Info" required />
+
+                <label for="joinedDate">Joined Date:</label>
+                <input type="date" id="joinedDate" required />
+
+                <label for="endingDate">Ending Date:</label>
+                <input type="date" id="endingDate" required />
+
+                <label for="specialHealthNotes">Special Health Notes:</label>
+                <textarea id="specialHealthNotes" placeholder="Special Health Notes"></textarea>
+
+                <label>
+                    VIP Client
+                    <input type="checkbox" id="isVIP" />
+                  
+                </label><br>
+
+                <button type="submit">Add Client</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Clients Display Section -->
+    <section id="clientDisplayContainer">
+        <div class="card">
+            <h2>Clients</h2>
+            <div id="clientList"></div>
+        </div>
+    </section>
+
+    <script src="app.js" type="module"></script>
+
 </body>
 </html>
